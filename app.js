@@ -26,6 +26,7 @@ app.get("/order-success", (req, res) => {
 });
 
 app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 app.use((req,res,next)=>{
 
