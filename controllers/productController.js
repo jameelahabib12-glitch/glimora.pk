@@ -1,4 +1,4 @@
-const Product = require("../models/Products"); 
+const Product = require("../models/Products");
 
 // SHOW ALL PRODUCTS
 const getAllProductsPage = async (req, res) => {
@@ -32,8 +32,35 @@ const getAllProductsPage = async (req, res) => {
 // CREATE PRODUCT
 const createProduct = async (req, res) => {
     try {
-        await Product.create(req.body);
+
+        const {
+            name,
+            description,
+            price,
+            stock,
+            image1,
+            image2,
+            image3,
+            image4
+        } = req.body;
+
+        const images = [
+            image1,
+            image2,
+            image3,
+            image4
+        ].filter(img => img && img.trim() !== "");
+
+        await Product.create({
+            name,
+            description,
+            price,
+            stock,
+            images
+        });
+
         res.redirect("/dashboard");
+
     } catch (err) {
         console.log(err);
         res.status(500).send("Server Error");
@@ -43,9 +70,12 @@ const createProduct = async (req, res) => {
 // EDIT PAGE
 const getEditProductPage = async (req, res) => {
     try {
+
         const product = await Product.findById(req.params.id);
 
-        res.render("edit-product", { product });
+        res.render("edit-product", {
+            product
+        });
 
     } catch (err) {
         console.log(err);
@@ -57,7 +87,31 @@ const getEditProductPage = async (req, res) => {
 const updateProduct = async (req, res) => {
     try {
 
-        await Product.findByIdAndUpdate(req.params.id, req.body);
+        const {
+            name,
+            description,
+            price,
+            stock,
+            image1,
+            image2,
+            image3,
+            image4
+        } = req.body;
+
+        const images = [
+            image1,
+            image2,
+            image3,
+            image4
+        ].filter(img => img && img.trim() !== "");
+
+        await Product.findByIdAndUpdate(req.params.id, {
+            name,
+            description,
+            price,
+            stock,
+            images
+        });
 
         res.redirect("/dashboard");
 

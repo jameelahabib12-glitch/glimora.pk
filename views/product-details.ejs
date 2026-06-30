@@ -20,7 +20,23 @@
             width:100%;
             border-radius:15px;
             object-fit:cover;
-            max-height:450px;
+            height:500px;
+            border:1px solid #ddd;
+        }
+
+        .thumbnail{
+            width:90px;
+            height:90px;
+            object-fit:cover;
+            border-radius:10px;
+            cursor:pointer;
+            border:2px solid transparent;
+            transition:.3s;
+        }
+
+        .thumbnail:hover{
+            border-color:#0d6efd;
+            transform:scale(1.05);
         }
 
         .price{
@@ -43,7 +59,7 @@
 
 <body>
 
-    <%- include("partials/navbar") %>
+<%- include("partials/navbar") %>
 
 <div class="container product-box">
 
@@ -53,15 +69,36 @@
 
     <div class="row">
 
+        <!-- LEFT SIDE -->
         <div class="col-md-6">
 
             <img
-                src="/<%= product.image %>"
-                class="product-img"
+                id="mainImage"
+                src="/<%= product.images[0] %>"
+                class="product-img shadow"
             >
+
+            <% if(product.images.length > 1){ %>
+
+            <div class="d-flex flex-wrap gap-2 mt-3">
+
+                <% product.images.forEach(image => { %>
+
+                    <img
+                        src="/<%= image %>"
+                        class="thumbnail"
+                        onclick="changeImage('/<%= image %>')"
+                    >
+
+                <% }) %>
+
+            </div>
+
+            <% } %>
 
         </div>
 
+        <!-- RIGHT SIDE -->
         <div class="col-md-6">
 
             <h1><%= product.name %></h1>
@@ -83,17 +120,27 @@
 
             <form action="/cart/add/<%= product._id %>" method="POST">
 
-    <button type="submit" class="btn btn-dark w-100">
-        Add to Cart
-    </button>
+                <button type="submit" class="btn btn-dark w-100">
+                    Add to Cart
+                </button>
 
-</form>
+            </form>
 
         </div>
 
     </div>
 
 </div>
+
+<script>
+
+function changeImage(image){
+
+    document.getElementById("mainImage").src = image;
+
+}
+
+</script>
 
 </body>
 </html>
