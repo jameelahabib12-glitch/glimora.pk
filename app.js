@@ -5,11 +5,9 @@ const path = require("path");
 const dotenv = require("dotenv");
 const { isLoggedIn, isAdmin } = require("./middleware/auth");
 
-const connectDB = require("./config/db");
-
 dotenv.config();
 
-connectDB();
+const connectDB = require("./config/db");
 
 const app = express();
 
@@ -499,9 +497,16 @@ app.post("/orders/update-status/:id", isAdmin, async (req, res) => {
 if (require.main === module) {
     const PORT = process.env.PORT || 3000;
 
-    app.listen(PORT, () => {
-        console.log(`Server running on http://localhost:${PORT}`);
-    });
+    connectDB()
+        .then(() => {
+            app.listen(PORT, () => {
+                console.log(`Server running on http://localhost:${PORT}`);
+            });
+        })
+        .catch((err) => {
+            console.error("Failed to connect to MongoDB:", err);
+            process.exit(1);
+        });
 }
 
 module.exports = app;
