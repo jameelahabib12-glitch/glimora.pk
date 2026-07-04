@@ -39,26 +39,17 @@ app.use((req,res,next)=>{
 app.set("trust proxy", 1);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use((req, res, next) => {
-    if (req.body && typeof req.body === "object" && req.body._method) {
-        req.method = req.body._method.toUpperCase();
-    }
-    next();
-});
+
 app.use(session({
-
-    secret: process.env.SESSION_SECRET || "glimora-session-secret",
-
-    resave:false,
-
-    saveUninitialized:false,
-
-    proxy: true,
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
 
     cookie: {
-        secure: process.env.NODE_ENV === "production"
+        secure: false,
+        httpOnly: true,
+        sameSite: "lax"
     }
-
 }));
 
 app.use((req, res, next) => {
