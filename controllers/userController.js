@@ -24,7 +24,7 @@ const registerUser = async (req,res)=>{
 
         });
 
-        res.redirect("/login");
+        res.redirect(303, "/login");
 
     }
 
@@ -64,11 +64,11 @@ const loginUser = async(req,res)=>{
 
         if(user.role==="admin"){
 
-            return res.redirect("/dashboard");
+            return res.redirect(303, "/dashboard");
 
         }
 
-        res.redirect("/");
+        res.redirect(303, "/");
 
     }
 

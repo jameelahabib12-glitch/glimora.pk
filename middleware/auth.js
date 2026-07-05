@@ -2,7 +2,7 @@
 const isLoggedIn = (req, res, next) => {
 
     if (!req.session.user) {
-        return res.redirect("/login");
+        return res.redirect(303, "/login");
     }
 
     next();
@@ -12,7 +12,7 @@ const isLoggedIn = (req, res, next) => {
 const isAdmin = (req, res, next) => {
 
     if (!req.session.user) {
-        return res.redirect("/login");
+        return res.redirect(303, "/login");
     }
 
     if (req.session.user.role !== "admin") {

@@ -59,7 +59,7 @@ const createProduct = async (req, res) => {
             images
         });
 
-        res.redirect("/dashboard");
+        res.redirect(303, "/dashboard");
 
     } catch (err) {
         console.log(err);
@@ -113,7 +113,7 @@ const updateProduct = async (req, res) => {
             images
         });
 
-        res.redirect("/dashboard");
+        res.redirect(303, "/dashboard");
 
     } catch (err) {
         console.log(err);
@@ -127,7 +127,7 @@ const deleteProduct = async (req, res) => {
 
         await Product.findByIdAndDelete(req.params.id);
 
-        res.redirect("/dashboard");
+        res.redirect(303, "/dashboard");
 
     } catch (err) {
         console.log(err);
