@@ -7,7 +7,7 @@ const getCheckout = async (req, res) => {
 
     try {
 
-        const cartItems = await Cart.find().populate("product");
+        const cartItems = await Cart.find({ user: req.session.user._id }).populate("product");
 
         let total = 0;
 
@@ -36,7 +36,7 @@ const postCheckout = async (req, res) => {
 
         const { customerName, customerEmail, phone, address } = req.body;
 
-        const cartItems = await Cart.find().populate("product");
+        const cartItems = await Cart.find({ user: req.session.user._id }).populate("product");
 
         if (cartItems.length === 0) {
             return res.send("Your cart is empty.");
@@ -92,8 +92,8 @@ for (const item of cartItems) {
 
 }
 
-        // Empty the cart
-        await Cart.deleteMany({});
+        // Empty the cart (only this user's items)
+        await Cart.deleteMany({ user: req.session.user._id });
 
         res.redirect(303, "/order-success");
 

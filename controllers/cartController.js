@@ -5,7 +5,7 @@ const Cart = require("../models/Cart");
 const getCart = async (req, res) => {
     try {
 
-        const cartItems = await Cart.find().populate("product");
+        const cartItems = await Cart.find({ user: req.session.user._id }).populate("product");
         const invalidItemIds = cartItems
             .filter(item => !item.product)
             .map(item => item._id);
@@ -43,7 +43,7 @@ if(product.stock <= 0){
 
 }
 
-        const existingItem = await Cart.findOne({ product: productId });
+        const existingItem = await Cart.findOne({ product: productId, user: req.session.user._id });
 
        if(existingItem){
 
@@ -60,6 +60,7 @@ if(product.stock <= 0){
 }
         else {
             await Cart.create({
+                user: req.session.user._id,
                 product: productId,
                 quantity: 1
             });
@@ -76,7 +77,7 @@ if(product.stock <= 0){
 // REMOVE ITEM FROM CART
 const removeFromCart = async (req, res) => {
     try {
-        await Cart.findByIdAndDelete(req.params.id);
+        await Cart.findOneAndDelete({ _id: req.params.id, user: req.session.user._id });
         res.redirect("/cart");
     } catch (err) {
         console.log(err);

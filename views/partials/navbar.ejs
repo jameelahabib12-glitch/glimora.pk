@@ -47,11 +47,15 @@ Orders
 
 <div class="d-flex align-items-center">
 
+<% if(session.user){ %>
+
 <a href="/cart" class="btn btn-outline-dark me-2">
 
 <i class="bi bi-cart3"></i>
 
 </a>
+
+<% } %>
 
 <% if(session.user){ %>
 

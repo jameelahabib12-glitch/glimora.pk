@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { isAdmin } = require("../middleware/auth");
+const { isAdmin, isLoggedIn } = require("../middleware/auth");
 
 const {
     getCheckout,
@@ -9,8 +9,8 @@ const {
     updateOrderStatus
 } = require("../controllers/orderController");
 
-router.get("/checkout", getCheckout);
-router.post("/checkout", postCheckout);
+router.get("/checkout", isLoggedIn, getCheckout);
+router.post("/checkout", isLoggedIn, postCheckout);
 router.get("/orders", isAdmin, getOrders);
 router.post("/orders/update-status/:id", isAdmin, updateOrderStatus);
 
