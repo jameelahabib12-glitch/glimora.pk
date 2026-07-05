@@ -1,0 +1,261 @@
+/* =====================================================================
+   GLIMORA.PK — GLOBAL STYLESHEET
+   Consolidates every page's original inline <style> block into one file,
+   keeping the original color palette and layout exactly, and adding
+   smoother hover states, transitions, and shadows on top.
+   ===================================================================== */
+
+:root{
+  --blue:       rgb(172, 208, 242);   /* original brand blue */
+  --blue-dark:  rgb(135, 170, 210);   /* original hover blue */
+  --blue-bg:    rgb(210, 226, 241);   /* original soft section bg */
+  --page-bg:    #f8fbff;
+  --ink-muted:  #6c757d;
+  --shadow-sm:  0 4px 14px rgba(0,0,0,.06);
+  --shadow-md:  0 10px 30px rgba(0,0,0,.08);
+  --shadow-lg:  0 16px 40px rgba(0,0,0,.14);
+}
+
+/* ---------- Base ---------- */
+
+body{
+  font-family: 'Poppins', sans-serif;
+  background: var(--page-bg);
+}
+
+.navbar{ background: #fff !important; }
+.navbar-brand{ font-size: 2rem; font-weight: 700; }
+
+.navbar .nav-link{
+  position: relative;
+  transition: color .2s ease;
+}
+.navbar .nav-link::after{
+  content:"";
+  position:absolute;
+  left:0; bottom:-2px;
+  width:0; height:2px;
+  background: var(--blue-dark);
+  transition: width .25s ease;
+}
+.navbar .nav-link:hover::after{ width:100%; }
+
+.section-title{ font-weight:700; margin-bottom:40px; }
+
+/* ---------- Hero (home page) — structure restored + kept as-is ---------- */
+
+.hero{
+  background:
+    linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+    url("/images/hero-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 650px;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+.hero h1{ color:white; font-size:60px; font-weight:700; }
+.hero p{ color:white; }
+
+/* ---------- Buttons (original blue, same colors, smoother interaction) ---------- */
+
+.blue-btn, .btn-custom, .btn-login, .btn-register{
+  background: var(--blue) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 30px;
+  padding: 12px 35px;
+  transition: background .25s ease, transform .15s ease, box-shadow .2s ease;
+}
+.blue-btn:hover, .btn-custom:hover, .btn-login:hover, .btn-register:hover{
+  background: var(--blue-dark) !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.btn-custom{ border-radius: 25px; padding: 8px 20px; }
+.btn-login, .btn-register{ padding: 12px; font-weight: 600; width: 100%; }
+
+.btn{ transition: transform .15s ease, box-shadow .2s ease; }
+.btn:hover{ transform: translateY(-2px); }
+.btn:focus-visible{ outline: 3px solid var(--blue); outline-offset: 2px; }
+
+/* ---------- Product cards ---------- */
+
+.product-card{
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform .3s ease, box-shadow .3s ease;
+  box-shadow: var(--shadow-sm);
+}
+.product-card:hover{
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+.product-card img{
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  transition: transform .5s ease;
+}
+.product-card:hover img{ transform: scale(1.05); }
+
+.price{ font-weight: 600; }
+.stock{ font-size: .9rem; }
+
+/* ---------- Page sections ---------- */
+
+.page-header{ background: var(--blue-bg); padding: 60px 0; text-align: center; }
+.promo{ background: var(--blue-bg); padding: 80px 0; }
+.newsletter{ background: var(--blue-bg); padding: 60px 0; }
+
+.feature-box{
+  padding: 30px;
+  border-radius: 15px;
+  background: var(--blue-bg);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.feature-box:hover{ transform: translateY(-5px); box-shadow: var(--shadow-sm); }
+
+.gallery img{ border-radius: 12px; }
+.testimonial{ background: #faf4f5; padding: 25px; border-radius: 15px; }
+
+/* ---------- Product details page ---------- */
+
+.product-box{ margin-top: 50px; }
+.product-img{
+  width: 100%;
+  border-radius: 15px;
+  object-fit: cover;
+  height: 500px;
+  border: 1px solid #ddd;
+}
+.thumbnail{
+  width: 90px; height: 90px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: .3s;
+}
+.thumbnail:hover{ border-color: #0d6efd; transform: scale(1.05); }
+
+/* ---------- Cart ---------- */
+
+.table img{ width: 60px; border-radius: 10px; }
+
+/* ---------- Checkout / order-success ---------- */
+
+.checkout-box, .box{
+  max-width: 700px;
+  margin: 50px auto;
+  background: white;
+  padding: 35px;
+  border-radius: 15px;
+  box-shadow: var(--shadow-md);
+}
+.box{ max-width: 600px; margin: 100px auto; padding: 50px; text-align: center; }
+
+/* ---------- Login / Register ----------
+   Restores the original centered layout (colored page background +
+   white card in the middle) WITHOUT a global body rule, so it only
+   applies on pages that actually contain a login/register card. */
+
+body:has(.login-card), body:has(.register-card){
+  background: var(--blue-bg);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-card, .register-card{
+  background: #fff;
+  padding: 40px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: var(--shadow-md);
+}
+.register-card{ max-width: 500px; }
+
+.brand{ font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 10px; }
+.subtitle{ text-align: center; color: var(--ink-muted); margin-bottom: 30px; }
+.register-link, .login-link{ text-align: center; margin-top: 20px; }
+
+a{ text-decoration: none; }
+
+/* ---------- Forms ---------- */
+
+.form-control{
+  border-radius: 12px;
+  padding: 12px;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.form-control:focus{
+  border-color: var(--blue-dark);
+  box-shadow: 0 0 0 .2rem rgba(172,208,242,.35);
+}
+
+/* ---------- Dashboard ---------- */
+
+.dashboard-header{ background: var(--blue-bg); padding: 35px; border-radius: 18px; margin-bottom: 35px; }
+.dashboard-header h2{ font-weight: 700; }
+
+.stat-card{
+  border: none;
+  border-radius: 18px;
+  transition: transform .3s ease, box-shadow .3s ease;
+  box-shadow: var(--shadow-sm);
+}
+.stat-card:hover{ transform: translateY(-5px); box-shadow: var(--shadow-md); }
+.stat-icon{ font-size: 40px; }
+
+.table-card{ background: #fff; border-radius: 18px; overflow: hidden; box-shadow: var(--shadow-sm); }
+table img{ width: 70px; height: 70px; object-fit: cover; border-radius: 12px; }
+.action-btn{ min-width: 80px; }
+.top-actions .btn{ border-radius: 30px; }
+.badge{ font-size: 14px; padding: 8px 12px; }
+
+/* ---------- Add / Edit product ---------- */
+
+.card{ border: none; border-radius: 20px; box-shadow: var(--shadow-sm); }
+.preview-img{
+  width: 90px; height: 90px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin-right: 10px;
+  transition: transform .2s ease;
+}
+.preview-img:hover{ transform: scale(1.05); }
+
+/* ---------- Footer (contrast fixed — text is explicitly white) ---------- */
+
+footer{
+  background: #222;
+  color: #fff;
+  padding: 50px 0;
+}
+footer, footer h3, footer h4, footer h5, footer p{ color: #fff; }
+footer a{
+  color: #fff;
+  text-decoration: none;
+  transition: color .2s ease, opacity .2s ease;
+}
+footer a:hover{ color: var(--blue); opacity: .9; }
+
+/* ---------- Accessibility ---------- */
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation: none !important; transition: none !important; }
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 768px){
+  .hero h1{ font-size: 38px; }
+}
